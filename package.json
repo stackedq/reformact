@@ -1,25 +1,50 @@
 {
   "name": "reformact",
-  "version": "0.1.0",
+  "version": "0.0.1",
   "description": "React form component using state.",
-  "main": "index.js",
+  "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack && npm link"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kiarashws/reformact.git"
   },
+  "peerDependencies": {
+    "react": "^16.3.2"
+  },
+  "dependencies": {
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "react": "^16.3.2",
+    "webpack": "^2.6.1"
+  },
   "keywords": [
     "react",
-      "react forms",
-      "react forms with state",
-      "react form"
+    "react forms",
+    "react forms with state",
+    "react form"
   ],
-  "author": "kiarash ny kiarashny@gmail.com",
+  "author": {
+    "name": "kiarash ny",
+    "email": "kiarashny@gmail.com"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/kiarashws/reformact/issues"
   },
-  "homepage": "https://github.com/kiarashws/reformact#readme"
+  "homepage": "https://github.com/kiarashws/reformact#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-preset-env": "^1.5.1",
+    "babel-preset-es2015": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "style-loader": "^0.21.0"
+  }
 }

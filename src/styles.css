@@ -1,0 +1,88 @@
+
+input {
+  width: 100%;
+  border: 1px solid rgba(48, 113, 113, 0.5);
+  padding: 8px 16px;
+  font-size: 18px;
+  font-family: 'Samim';
+  text-align: center;
+  border-radius: 40px;
+  color: #307171;
+  transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+}
+
+input[type="number"] {
+  direction: ltr;
+}
+
+input[type="submit"] {
+  background: #307171;
+  color: #fff;
+}
+
+input[type="submit"]:hover {
+  background: #408f8f;
+}
+
+.input-holder {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.input-holder span {
+  position: absolute;
+  text-align: center;
+  pointer-events: none;
+  top: 9px;
+  color: #307171;
+  right: 0;
+  width: 100%;
+  left: 0;
+  margin: 0 auto;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  opacity: .7;
+}
+
+.input-holder input:focus+span, .input-holder span.with-value {
+  opacity: 1;
+  font-size: 12px;
+  top: -16px;
+}
+
+.input-err+span, .input-errors {
+  color: rgb(255, 128, 128)
+}
+
+.input-err {
+  border-color: rgb(255, 128, 128);
+  color: rgb(255, 128, 128);
+}
+
+.input-errors{
+  padding: 0 20px;
+  list-style: none;
+}
+
+.input-errors li{
+  position: relative;
+  animation: error-item .3s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes error-item {
+  0%{
+    top: -10px;
+    opacity: 0;
+  }
+  100%{
+    top: 0;
+    opacity: 1;
+  }
+}
