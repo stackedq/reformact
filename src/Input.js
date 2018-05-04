@@ -21,19 +21,43 @@ export default class Input extends Component {
     this.props.onChange(e)
   }
 
+  onCheckboxChange = (e) => {
+    var value = e.target.checked
+    this.setState({value})
+    this.props.onChange({target: {name: this.props.name, value: e.target.checked}})
+  }
+
   render() {
     const {
       type,
       name,
+      checkboxLabel,
       placeholder,
       requiredPhrase,
+      mustBeCheckedPhrase,
       required,
       needsToFill
     } = this.props
     const {hasError, value, errors} = this.state
     switch (type) {
       case 'select':
-      return <Select {...this.props}  onChange={this.onChange.bind(this)}/>
+        return <Select {...this.props} onChange={this.onChange.bind(this)}/>
+      case 'checkbox':
+        return(
+          <div className="input-holder">
+            <input type="checkbox" id={name} name={name} checked={value} onChange={this.onCheckboxChange.bind(this)} />
+            <label htmlFor={name}>{checkboxLabel}{
+                required
+                  ? '*'
+                  : ''
+              }</label>
+              <ul className={needsToFill
+                  ? "input-errors vis"
+                  : "input-errors"}>
+            {needsToFill && <li>{mustBeCheckedPhrase || 'This field is required.'}</li>}
+          </ul>
+          </div>
+        )
       default:
         return (<div className="input-holder">
           <input className={hasError || (needsToFill && value.length === 0)

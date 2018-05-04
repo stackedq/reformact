@@ -26,6 +26,14 @@ input[type="submit"]:hover, .input[type="submit"]:hover {
   background: #408f8f;
 }
 
+input[type="checkbox"]{
+  width: auto;
+}
+input[type="checkbox"] + label{
+  font-weight: normal;
+  margin: 0 4px;
+}
+
 .input-select {
   cursor: pointer;
 }
