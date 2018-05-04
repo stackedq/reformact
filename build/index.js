@@ -64,7 +64,7 @@ module.exports =
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 6);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -84,11 +84,17 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
+
+var _Select = __webpack_require__(6);
+
+var _Select2 = _interopRequireDefault(_Select);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -147,32 +153,7 @@ var Input = function (_Component) {
 
       switch (type) {
         case 'select':
-          _react2.default.createElement(
-            'div',
-            { className: 'input-holder' },
-            _react2.default.createElement(
-              'span',
-              { className: value.length > 0 ? 'with-value' : '' },
-              placeholder,
-              required ? '*' : ''
-            ),
-            _react2.default.createElement(
-              'ul',
-              { className: errors.length > 0 || needsToFill ? "input-errors vis" : "input-errors" },
-              needsToFill && _react2.default.createElement(
-                'li',
-                null,
-                requiredPhrase || 'This field is required.'
-              ),
-              errors.map(function (error, index) {
-                return _react2.default.createElement(
-                  'li',
-                  { key: index },
-                  error
-                );
-              })
-            )
-          );
+          return _react2.default.createElement(_Select2.default, _extends({}, this.props, { onChange: this.onChange.bind(this) }));
         default:
           return _react2.default.createElement(
             'div',
@@ -222,6 +203,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 var isEmpty = exports.isEmpty = function isEmpty(obj) {
   if (!obj) return true;
+  if (obj.length === 0) return true;
   if (obj === '') return true;
   return false;
 };
@@ -231,7 +213,7 @@ var isEmpty = exports.isEmpty = function isEmpty(obj) {
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(7);
+var content = __webpack_require__(8);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -245,7 +227,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(8)(content, options);
+var update = __webpack_require__(9)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -464,6 +446,181 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Select = function (_Component) {
+  _inherits(Select, _Component);
+
+  function Select() {
+    var _ref;
+
+    var _temp, _this, _ret;
+
+    _classCallCheck(this, Select);
+
+    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Select.__proto__ || Object.getPrototypeOf(Select)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+      hasError: false,
+      errors: [],
+      value: _this.props.defaultValue || (_this.props.multiSelect ? [] : ''),
+      options: _this.props.options,
+      optionsVisible: false
+    }, _this.toggleOptions = function () {
+      _this.setState({
+        optionsVisible: !_this.state.optionsVisible
+      });
+    }, _this.closeOptions = function () {
+      _this.setState({ optionsVisible: false });
+    }, _this.selectOption = function (op) {
+      var multiSelect = _this.props.multiSelect;
+
+      if (multiSelect) _this.setState({
+        value: [op].concat(_toConsumableArray(_this.state.value)),
+        options: _this.state.options.filter(function (o) {
+          return o !== op;
+        })
+      }, _this.handleChange);else {
+        _this.setState({
+          value: op
+        }, _this.handleChange);
+        _this.closeOptions();
+      }
+    }, _this.handleChange = function () {
+      _this.props.onChange({
+        target: {
+          value: _this.state.value,
+          name: _this.props.name
+        }
+      });
+    }, _this.removeValue = function (op) {
+      _this.setState({
+        value: _this.state.value.filter(function (v) {
+          return v !== op;
+        }),
+        options: [].concat(_toConsumableArray(_this.state.options), [op])
+      }, _this.handleChange);
+    }, _temp), _possibleConstructorReturn(_this, _ret);
+  }
+
+  _createClass(Select, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var _props = this.props,
+          name = _props.name,
+          placeholder = _props.placeholder,
+          requiredPhrase = _props.requiredPhrase,
+          required = _props.required,
+          selectHandle = _props.selectHandle,
+          multiSelect = _props.multiSelect,
+          needsToFill = _props.needsToFill;
+      var _state = this.state,
+          hasError = _state.hasError,
+          value = _state.value,
+          errors = _state.errors,
+          optionsVisible = _state.optionsVisible,
+          options = _state.options;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'input-holder' },
+        _react2.default.createElement(
+          'div',
+          { onClick: this.toggleOptions, className: hasError || needsToFill && value.length === 0 ? 'input input-select input-err' : 'input input-select ' },
+          multiSelect ? value.map(function (v, index) {
+            return _react2.default.createElement(
+              'div',
+              { key: index, className: 'val-one' },
+              v.label || value,
+              _react2.default.createElement(
+                'a',
+                { onClick: function onClick() {
+                    return _this2.removeValue(v);
+                  } },
+                'x'
+              )
+            );
+          }) : value.label || value,
+          '\xA0',
+          _react2.default.createElement(
+            'div',
+            { className: 'ops-handle' },
+            selectHandle ? selectHandle : _react2.default.createElement('i', { className: 'ops-triangle' })
+          )
+        ),
+        _react2.default.createElement(
+          'span',
+          { className: multiSelect && value[0] || !multiSelect && value ? 'with-value' : '' },
+          placeholder,
+          required ? '*' : ''
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: optionsVisible && options.length !== 0 ? "options vis" : "options" },
+          options.map(function (op, index) {
+            return _react2.default.createElement(
+              'div',
+              { key: index, className: 'op', onClick: function onClick() {
+                  return _this2.selectOption(op);
+                } },
+              op.label
+            );
+          })
+        ),
+        _react2.default.createElement(
+          'ul',
+          { className: errors.length > 0 || needsToFill ? "input-errors vis" : "input-errors" },
+          needsToFill && value.length === 0 && _react2.default.createElement(
+            'li',
+            null,
+            requiredPhrase || 'This field is required.'
+          ),
+          errors.map(function (error, index) {
+            return _react2.default.createElement(
+              'li',
+              { key: index },
+              error
+            );
+          })
+        )
+      );
+    }
+  }]);
+
+  return Select;
+}(_react.Component);
+
+exports.default = Select;
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -566,7 +723,7 @@ var Form = function (_Component) {
 exports.default = Form;
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(4)(false);
@@ -574,13 +731,13 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\ninput {\n  width: 100%;\n  border: 1px solid rgba(48, 113, 113, 0.5);\n  padding: 8px 16px;\n  font-size: 18px;\n  font-family: 'Samim';\n  text-align: center;\n  border-radius: 40px;\n  color: #307171;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\ninput[type=\"number\"] {\n  direction: ltr;\n}\n\ninput[type=\"submit\"] {\n  background: #307171;\n  color: #fff;\n}\n\ninput[type=\"submit\"]:hover {\n  background: #408f8f;\n}\n\n.input-holder {\n  position: relative;\n  margin-bottom: 30px;\n}\n\n.input-holder span {\n  position: absolute;\n  text-align: center;\n  pointer-events: none;\n  top: 9px;\n  color: #307171;\n  right: 0;\n  width: 100%;\n  left: 0;\n  margin: 0 auto;\n  font-size: 18px;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  opacity: .7;\n}\n\n.input-holder input:focus+span, .input-holder span.with-value {\n  opacity: 1;\n  font-size: 12px;\n  top: -16px;\n}\n\n.input-err+span, .input-errors {\n  color: rgb(255, 128, 128)\n}\n\n.input-err {\n  border-color: rgb(255, 128, 128);\n  color: rgb(255, 128, 128);\n}\n\n.input-errors{\n  padding: 0 20px;\n  list-style: none;\n}\n\n.input-errors li{\n  position: relative;\n  animation: error-item .3s;\n  animation-fill-mode: forwards;\n}\n\n@keyframes error-item {\n  0%{\n    top: -10px;\n    opacity: 0;\n  }\n  100%{\n    top: 0;\n    opacity: 1;\n  }\n}\n", ""]);
+exports.push([module.i, "input, .input {\n  width: 100%;\n  border: 1px solid rgba(48, 113, 113, 0.5);\n  padding: 8px 16px;\n  font-size: 18px;\n  font-family: 'Samim';\n  text-align: center;\n  border-radius: 40px;\n  color: #307171;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\ninput[type=\"number\"], .input[type=\"number\"] {\n  direction: ltr;\n}\n\ninput[type=\"submit\"], .input[type=\"submit\"] {\n  background: #307171;\n  color: #fff;\n}\n\ninput[type=\"submit\"]:hover, .input[type=\"submit\"]:hover {\n  background: #408f8f;\n}\n\n.input-select {\n  cursor: pointer;\n}\n\n.input-holder {\n  position: relative;\n  margin-bottom: 30px;\n}\n\n.input-holder span {\n  position: absolute;\n  text-align: center;\n  pointer-events: none;\n  top: 9px;\n  color: #307171;\n  right: 0;\n  width: 100%;\n  left: 0;\n  margin: 0 auto;\n  font-size: 18px;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  opacity: .7;\n}\n\n.ops-triangle {\n  position: relative;\n  top: 18px;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 8px 8px 0 8px;\n  border-color: #307171 transparent transparent transparent;\n}\n\n.ops-handle {\n  position: absolute;\n  top: 12px;\n  right: 20px;\n}\n\n.val-one {\n  display: inline-block;\n  padding: 4px;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 20px;\n  font-size: 12px;\n}\n.val-one a{\n  margin: 0 4px;\n}\n\n.options {\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  visibility: hidden;\n  max-height: 200px;\n  overflow: auto;\n  opacity: 0;\n  padding: 8px 0;\n  position: absolute;\n  top: 90%;\n  left: 15px;\n  right: 15px;\n  background: #fff;\n  z-index: 10;\n  border-radius: 4px;\n  color: #666;\n  box-shadow: 0 0 8px rgba(0, 0, 0, .1), 0 4px 16px -2px rgba(0, 0, 0, .2)\n}\n\n.options>div {\n  padding: 8px;\n  display: block;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\n.options>div:hover {\n  background: #fafafa;\n}\n\n.options.vis {\n  visibility: visible;\n  top: 104%;\n  opacity: 1;\n}\n\n.input-holder input:focus+span, .input-holder .input:focus+span, .input-holder span.with-value {\n  opacity: 1;\n  font-size: 12px;\n  top: -16px;\n}\n\n.input-err+span, .input-errors {\n  color: rgb(255, 128, 128)\n}\n\n.input-err {\n  border-color: rgb(255, 128, 128);\n  color: rgb(255, 128, 128);\n}\n\n.input-errors {\n  padding: 0 20px;\n  list-style: none;\n}\n\n.input-errors li {\n  position: relative;\n  animation: error-item .3s;\n  animation-fill-mode: forwards;\n}\n\n@keyframes error-item {\n  0% {\n    top: -10px;\n    opacity: 0;\n  }\n  100% {\n    top: 0;\n    opacity: 1;\n  }\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*

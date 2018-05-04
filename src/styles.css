@@ -1,5 +1,4 @@
-
-input {
+input, .input {
   width: 100%;
   border: 1px solid rgba(48, 113, 113, 0.5);
   padding: 8px 16px;
@@ -14,17 +13,21 @@ input {
   -webkit-transition: all 0.3s ease;
 }
 
-input[type="number"] {
+input[type="number"], .input[type="number"] {
   direction: ltr;
 }
 
-input[type="submit"] {
+input[type="submit"], .input[type="submit"] {
   background: #307171;
   color: #fff;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, .input[type="submit"]:hover {
   background: #408f8f;
+}
+
+.input-select {
+  cursor: pointer;
 }
 
 .input-holder {
@@ -50,7 +53,75 @@ input[type="submit"]:hover {
   opacity: .7;
 }
 
-.input-holder input:focus+span, .input-holder span.with-value {
+.ops-triangle {
+  position: relative;
+  top: 18px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 8px 8px 0 8px;
+  border-color: #307171 transparent transparent transparent;
+}
+
+.ops-handle {
+  position: absolute;
+  top: 12px;
+  right: 20px;
+}
+
+.val-one {
+  display: inline-block;
+  padding: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  font-size: 12px;
+}
+.val-one a{
+  margin: 0 4px;
+}
+
+.options {
+  transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  visibility: hidden;
+  max-height: 200px;
+  overflow: auto;
+  opacity: 0;
+  padding: 8px 0;
+  position: absolute;
+  top: 90%;
+  left: 15px;
+  right: 15px;
+  background: #fff;
+  z-index: 10;
+  border-radius: 4px;
+  color: #666;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .1), 0 4px 16px -2px rgba(0, 0, 0, .2)
+}
+
+.options>div {
+  padding: 8px;
+  display: block;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+}
+
+.options>div:hover {
+  background: #fafafa;
+}
+
+.options.vis {
+  visibility: visible;
+  top: 104%;
+  opacity: 1;
+}
+
+.input-holder input:focus+span, .input-holder .input:focus+span, .input-holder span.with-value {
   opacity: 1;
   font-size: 12px;
   top: -16px;
@@ -65,23 +136,23 @@ input[type="submit"]:hover {
   color: rgb(255, 128, 128);
 }
 
-.input-errors{
+.input-errors {
   padding: 0 20px;
   list-style: none;
 }
 
-.input-errors li{
+.input-errors li {
   position: relative;
   animation: error-item .3s;
   animation-fill-mode: forwards;
 }
 
 @keyframes error-item {
-  0%{
+  0% {
     top: -10px;
     opacity: 0;
   }
-  100%{
+  100% {
     top: 0;
     opacity: 1;
   }

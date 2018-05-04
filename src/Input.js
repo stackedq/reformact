@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import Select from './Select'
 
 export default class Input extends Component {
   state = {
@@ -21,21 +22,18 @@ export default class Input extends Component {
   }
 
   render() {
-    const {type, name, placeholder, requiredPhrase, required, needsToFill} = this.props
+    const {
+      type,
+      name,
+      placeholder,
+      requiredPhrase,
+      required,
+      needsToFill
+    } = this.props
     const {hasError, value, errors} = this.state
     switch (type) {
       case 'select':
-        (<div className="input-holder">
-          <span className={value.length > 0
-              ? 'with-value'
-              : ''}>{placeholder}{required?'*':''}</span>
-          <ul className={errors.length > 0 || needsToFill
-              ? "input-errors vis"
-              : "input-errors"}>
-            {needsToFill && <li>{requiredPhrase || 'This field is required.'}</li>}
-            {errors.map((error, index) => <li key={index}>{error}</li>)}
-          </ul>
-        </div>)
+      return <Select {...this.props}  onChange={this.onChange.bind(this)}/>
       default:
         return (<div className="input-holder">
           <input className={hasError || (needsToFill && value.length === 0)
@@ -43,7 +41,11 @@ export default class Input extends Component {
               : ''} type={type} autoComplete="off" name={name} value={value} onChange={this.onChange.bind(this)}/>
           <span className={value.length > 0
               ? 'with-value'
-              : ''}>{placeholder}{required?'*':''}</span>
+              : ''}>{placeholder}{
+              required
+                ? '*'
+                : ''
+            }</span>
           <ul className={errors.length > 0 || needsToFill
               ? "input-errors vis"
               : "input-errors"}>
