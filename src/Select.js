@@ -34,7 +34,6 @@ export default class Select extends Component {
       }, this.handleChange)
       this.closeOptions()
     }
-
   }
   handleChange = () => {
     this.props.onChange({
@@ -55,7 +54,6 @@ export default class Select extends Component {
   }
   render() {
     const {
-      name,
       placeholder,
       requiredPhrase,
       required,

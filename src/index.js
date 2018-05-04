@@ -5,7 +5,9 @@ import './styles.css'
 
 export default class Form extends Component {
   state = {
-    fields: this.props.fields
+    fields: this.props.fields,
+    initialFields: Object.assign({}, {fields: this.props.fields}),
+    counter: 0
   }
   componentDidMount = () => {
     const {fields} = this.props
@@ -39,16 +41,23 @@ export default class Form extends Component {
     })
   }
   render() {
-    const {submitText} = this.props
-    const {fields} = this.state
-    return (<form onSubmit={this.onSubmit}>
+    const {submitText, hasReset, resetText} = this.props
+    const {fields, counter} = this.state
+    return (<form key={counter} onSubmit={this.onSubmit}>
       <input name='username' style={{
           display: "none"
         }}/>
       <input type="password" name='password' style={{
           display: "none"
         }}/> {fields && fields.map((input, index) => <Input key={index} {...input} onChange={(e) => this.handleChange(e)}/>)}
-      <input type="submit" value={submitText}/>
+      <input type="submit" value={submitText}/> {
+        hasReset
+          ? <input type="reset" onClick={() => this.setState({
+                fields: this.state.initialFields.fields,
+                counter: counter + 1
+              })}/>
+          : ''
+      }
     </form>)
   }
 }

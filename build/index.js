@@ -133,6 +133,10 @@ var Input = function (_Component) {
       _this.setState({ errors: errors, value: value });
       if (errors.length > 0) _this.setState({ hasError: true });else _this.setState({ hasError: false });
       _this.props.onChange(e);
+    }, _this.onCheckboxChange = function (e) {
+      var value = e.target.checked;
+      _this.setState({ value: value });
+      _this.props.onChange({ target: { name: _this.props.name, value: e.target.checked } });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -142,8 +146,10 @@ var Input = function (_Component) {
       var _props = this.props,
           type = _props.type,
           name = _props.name,
+          checkboxLabel = _props.checkboxLabel,
           placeholder = _props.placeholder,
           requiredPhrase = _props.requiredPhrase,
+          mustBeCheckedPhrase = _props.mustBeCheckedPhrase,
           required = _props.required,
           needsToFill = _props.needsToFill;
       var _state = this.state,
@@ -154,6 +160,27 @@ var Input = function (_Component) {
       switch (type) {
         case 'select':
           return _react2.default.createElement(_Select2.default, _extends({}, this.props, { onChange: this.onChange.bind(this) }));
+        case 'checkbox':
+          return _react2.default.createElement(
+            'div',
+            { className: 'input-holder' },
+            _react2.default.createElement('input', { type: 'checkbox', id: name, name: name, checked: value, onChange: this.onCheckboxChange.bind(this) }),
+            _react2.default.createElement(
+              'label',
+              { htmlFor: name },
+              checkboxLabel,
+              required ? '*' : ''
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: needsToFill ? "input-errors vis" : "input-errors" },
+              needsToFill && _react2.default.createElement(
+                'li',
+                null,
+                mustBeCheckedPhrase || 'This field is required.'
+              )
+            )
+          );
         default:
           return _react2.default.createElement(
             'div',
@@ -525,7 +552,6 @@ var Select = function (_Component) {
       var _this2 = this;
 
       var _props = this.props,
-          name = _props.name,
           placeholder = _props.placeholder,
           requiredPhrase = _props.requiredPhrase,
           required = _props.required,
@@ -662,7 +688,9 @@ var Form = function (_Component) {
     }
 
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Form.__proto__ || Object.getPrototypeOf(Form)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-      fields: _this.props.fields
+      fields: _this.props.fields,
+      initialFields: Object.assign({}, { fields: _this.props.fields }),
+      counter: 0
     }, _this.componentDidMount = function () {
       var fields = _this.props.fields;
 
@@ -694,12 +722,17 @@ var Form = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var submitText = this.props.submitText;
-      var fields = this.state.fields;
+      var _props = this.props,
+          submitText = _props.submitText,
+          hasReset = _props.hasReset,
+          resetText = _props.resetText;
+      var _state = this.state,
+          fields = _state.fields,
+          counter = _state.counter;
 
       return _react2.default.createElement(
         'form',
-        { onSubmit: this.onSubmit },
+        { key: counter, onSubmit: this.onSubmit },
         _react2.default.createElement('input', { name: 'username', style: {
             display: "none"
           } }),
@@ -712,7 +745,14 @@ var Form = function (_Component) {
               return _this2.handleChange(e);
             } }));
         }),
-        _react2.default.createElement('input', { type: 'submit', value: submitText })
+        _react2.default.createElement('input', { type: 'submit', value: submitText }),
+        ' ',
+        hasReset ? _react2.default.createElement('input', { type: 'reset', onClick: function onClick() {
+            return _this2.setState({
+              fields: _this2.state.initialFields.fields,
+              counter: counter + 1
+            });
+          } }) : ''
       );
     }
   }]);
@@ -731,7 +771,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "input, .input {\n  width: 100%;\n  border: 1px solid rgba(48, 113, 113, 0.5);\n  padding: 8px 16px;\n  font-size: 18px;\n  font-family: 'Samim';\n  text-align: center;\n  border-radius: 40px;\n  color: #307171;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\ninput[type=\"number\"], .input[type=\"number\"] {\n  direction: ltr;\n}\n\ninput[type=\"submit\"], .input[type=\"submit\"] {\n  background: #307171;\n  color: #fff;\n}\n\ninput[type=\"submit\"]:hover, .input[type=\"submit\"]:hover {\n  background: #408f8f;\n}\n\n.input-select {\n  cursor: pointer;\n}\n\n.input-holder {\n  position: relative;\n  margin-bottom: 30px;\n}\n\n.input-holder span {\n  position: absolute;\n  text-align: center;\n  pointer-events: none;\n  top: 9px;\n  color: #307171;\n  right: 0;\n  width: 100%;\n  left: 0;\n  margin: 0 auto;\n  font-size: 18px;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  opacity: .7;\n}\n\n.ops-triangle {\n  position: relative;\n  top: 18px;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 8px 8px 0 8px;\n  border-color: #307171 transparent transparent transparent;\n}\n\n.ops-handle {\n  position: absolute;\n  top: 12px;\n  right: 20px;\n}\n\n.val-one {\n  display: inline-block;\n  padding: 4px;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 20px;\n  font-size: 12px;\n}\n.val-one a{\n  margin: 0 4px;\n}\n\n.options {\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  visibility: hidden;\n  max-height: 200px;\n  overflow: auto;\n  opacity: 0;\n  padding: 8px 0;\n  position: absolute;\n  top: 90%;\n  left: 15px;\n  right: 15px;\n  background: #fff;\n  z-index: 10;\n  border-radius: 4px;\n  color: #666;\n  box-shadow: 0 0 8px rgba(0, 0, 0, .1), 0 4px 16px -2px rgba(0, 0, 0, .2)\n}\n\n.options>div {\n  padding: 8px;\n  display: block;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\n.options>div:hover {\n  background: #fafafa;\n}\n\n.options.vis {\n  visibility: visible;\n  top: 104%;\n  opacity: 1;\n}\n\n.input-holder input:focus+span, .input-holder .input:focus+span, .input-holder span.with-value {\n  opacity: 1;\n  font-size: 12px;\n  top: -16px;\n}\n\n.input-err+span, .input-errors {\n  color: rgb(255, 128, 128)\n}\n\n.input-err {\n  border-color: rgb(255, 128, 128);\n  color: rgb(255, 128, 128);\n}\n\n.input-errors {\n  padding: 0 20px;\n  list-style: none;\n}\n\n.input-errors li {\n  position: relative;\n  animation: error-item .3s;\n  animation-fill-mode: forwards;\n}\n\n@keyframes error-item {\n  0% {\n    top: -10px;\n    opacity: 0;\n  }\n  100% {\n    top: 0;\n    opacity: 1;\n  }\n}\n", ""]);
+exports.push([module.i, "input, .input {\n  width: 100%;\n  border: 1px solid rgba(48, 113, 113, 0.5);\n  padding: 8px 16px;\n  font-size: 18px;\n  font-family: 'Samim';\n  text-align: center;\n  border-radius: 40px;\n  color: #307171;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\ninput[type=\"number\"], .input[type=\"number\"] {\n  direction: ltr;\n}\n\ninput[type=\"submit\"], .input[type=\"submit\"] {\n  background: #307171;\n  color: #fff;\n}\n\ninput[type=\"submit\"]:hover, .input[type=\"submit\"]:hover {\n  background: #408f8f;\n}\n\ninput[type=\"checkbox\"]{\n  width: auto;\n}\ninput[type=\"checkbox\"] + label{\n  font-weight: normal;\n  margin: 0 4px;\n}\n\n.input-select {\n  cursor: pointer;\n}\n\n.input-holder {\n  position: relative;\n  margin-bottom: 30px;\n}\n\n.input-holder span {\n  position: absolute;\n  text-align: center;\n  pointer-events: none;\n  top: 9px;\n  color: #307171;\n  right: 0;\n  width: 100%;\n  left: 0;\n  margin: 0 auto;\n  font-size: 18px;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  opacity: .7;\n}\n\n.ops-triangle {\n  position: relative;\n  top: 18px;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 8px 8px 0 8px;\n  border-color: #307171 transparent transparent transparent;\n}\n\n.ops-handle {\n  position: absolute;\n  top: 12px;\n  right: 20px;\n}\n\n.val-one {\n  display: inline-block;\n  padding: 4px;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 20px;\n  font-size: 12px;\n}\n.val-one a{\n  margin: 0 4px;\n}\n\n.options {\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  visibility: hidden;\n  max-height: 200px;\n  overflow: auto;\n  opacity: 0;\n  padding: 8px 0;\n  position: absolute;\n  top: 90%;\n  left: 15px;\n  right: 15px;\n  background: #fff;\n  z-index: 10;\n  border-radius: 4px;\n  color: #666;\n  box-shadow: 0 0 8px rgba(0, 0, 0, .1), 0 4px 16px -2px rgba(0, 0, 0, .2)\n}\n\n.options>div {\n  padding: 8px;\n  display: block;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\n.options>div:hover {\n  background: #fafafa;\n}\n\n.options.vis {\n  visibility: visible;\n  top: 104%;\n  opacity: 1;\n}\n\n.input-holder input:focus+span, .input-holder .input:focus+span, .input-holder span.with-value {\n  opacity: 1;\n  font-size: 12px;\n  top: -16px;\n}\n\n.input-err+span, .input-errors {\n  color: rgb(255, 128, 128)\n}\n\n.input-err {\n  border-color: rgb(255, 128, 128);\n  color: rgb(255, 128, 128);\n}\n\n.input-errors {\n  padding: 0 20px;\n  list-style: none;\n}\n\n.input-errors li {\n  position: relative;\n  animation: error-item .3s;\n  animation-fill-mode: forwards;\n}\n\n@keyframes error-item {\n  0% {\n    top: -10px;\n    opacity: 0;\n  }\n  100% {\n    top: 0;\n    opacity: 1;\n  }\n}\n", ""]);
 
 // exports
 
