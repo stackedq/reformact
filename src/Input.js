@@ -34,7 +34,7 @@ export default class Input extends Component {
 
   onRadioChange = (e) => {
     var value = options.find(op => op.value === e.target.value)
-    this.setState({value: e.target.value})
+    this.setState({value})
     this.props.onChange({
       target: {
         name: this.props.name,
@@ -83,7 +83,7 @@ export default class Input extends Component {
             }</label>
           {
             options && options.map((option, index) => <div key={index}>
-              <input type="radio" id={`${name}-${option.value}`} name={name} value={option.value} checked={value} onChange={this.onRadioChange.bind(this)}/>
+              <input type="radio" id={`${name}-${option.value}`} name={name} checked={option === value} value={option.value} checked={value} onChange={this.onRadioChange.bind(this)}/>
               <label htmlFor={`${name}-${option.value}`}>
                 {option.label}
               </label>
