@@ -136,20 +136,3 @@ input[type="checkbox"] + label{
 .input-errors {
   padding: 0 20px;
 }
-
-.input-errors li {
-  position: relative;
-  animation: error-item .3s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes error-item {
-  0% {
-    top: -10px;
-    opacity: 0;
-  }
-  100% {
-    top: 0;
-    opacity: 1;
-  }
-}
