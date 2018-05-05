@@ -1,34 +1,29 @@
 input, .input {
   width: 100%;
-  border: 1px solid rgba(48, 113, 113, 0.5);
-  padding: 8px 16px;
-  font-size: 18px;
-  font-family: 'Samim';
+  border: 1px solid rgba(0, 0, 0, 0.3);
   text-align: center;
-  border-radius: 40px;
-  color: #307171;
+  border-radius: 4px;
+  padding: 4px;
+  color: #666;
   transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
   -webkit-transition: all 0.3s ease;
 }
 
-input[type="number"], .input[type="number"] {
-  direction: ltr;
-}
-
 input[type="submit"], .input[type="submit"] {
-  background: #307171;
+  background: #666;
   color: #fff;
 }
 
 input[type="submit"]:hover, .input[type="submit"]:hover {
-  background: #408f8f;
+  background: #555;
 }
 
 input[type="checkbox"]{
   width: auto;
 }
+
 input[type="checkbox"] + label{
   font-weight: normal;
   margin: 0 4px;
@@ -36,6 +31,7 @@ input[type="checkbox"] + label{
 
 .input-select {
   cursor: pointer;
+  position: relative;
 }
 
 .input-holder {
@@ -44,16 +40,7 @@ input[type="checkbox"] + label{
 }
 
 .input-holder span {
-  position: absolute;
-  text-align: center;
-  pointer-events: none;
-  top: 9px;
-  color: #307171;
-  right: 0;
-  width: 100%;
-  left: 0;
-  margin: 0 auto;
-  font-size: 18px;
+  padding-bottom: 4px;
   transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
@@ -63,18 +50,25 @@ input[type="checkbox"] + label{
 
 .ops-triangle {
   position: relative;
-  top: 18px;
+  top: 9px;
   width: 0;
   height: 0;
   border-style: solid;
   border-width: 8px 8px 0 8px;
-  border-color: #307171 transparent transparent transparent;
+  border-color: #666 transparent transparent transparent;
 }
 
 .ops-handle {
   position: absolute;
-  top: 12px;
-  right: 20px;
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
+  display: table;
+}
+
+.ops-handle i {
+   display: table-cell;
+   vertical-align: middle;
 }
 
 .val-one {
@@ -84,11 +78,12 @@ input[type="checkbox"] + label{
   border-radius: 20px;
   font-size: 12px;
 }
+
 .val-one a{
   margin: 0 4px;
 }
 
-.options {
+.reformact-select-options {
   transition: all 0.3s ease;
   -o-transition: all 0.3s ease;
   -moz-transition: all 0.3s ease;
@@ -109,7 +104,7 @@ input[type="checkbox"] + label{
   box-shadow: 0 0 8px rgba(0, 0, 0, .1), 0 4px 16px -2px rgba(0, 0, 0, .2)
 }
 
-.options>div {
+.reformact-select-options > div {
   padding: 8px;
   display: block;
   cursor: pointer;
@@ -119,23 +114,17 @@ input[type="checkbox"] + label{
   -webkit-transition: all 0.3s ease;
 }
 
-.options>div:hover {
+.reformact-select-options >div:hover {
   background: #fafafa;
 }
 
-.options.vis {
+.reformact-select-options.vis {
   visibility: visible;
-  top: 104%;
+  top: 101%;
   opacity: 1;
 }
 
-.input-holder input:focus+span, .input-holder .input:focus+span, .input-holder span.with-value {
-  opacity: 1;
-  font-size: 12px;
-  top: -16px;
-}
-
-.input-err+span, .input-errors {
+.input-err~span, .input-errors {
   color: rgb(255, 128, 128)
 }
 
@@ -146,7 +135,6 @@ input[type="checkbox"] + label{
 
 .input-errors {
   padding: 0 20px;
-  list-style: none;
 }
 
 .input-errors li {

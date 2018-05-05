@@ -24,7 +24,16 @@ export default class Input extends Component {
   onCheckboxChange = (e) => {
     var value = e.target.checked
     this.setState({value})
-    this.props.onChange({target: {name: this.props.name, value: e.target.checked}})
+    this.props.onChange({
+      target: {
+        name: this.props.name,
+        value: e.target.checked
+      }
+    })
+  }
+
+  onRadioChange = (e) => {
+    console.log(e.target);
   }
 
   render() {
@@ -32,6 +41,7 @@ export default class Input extends Component {
       type,
       name,
       checkboxLabel,
+      hasPlaceholder,
       placeholder,
       requiredPhrase,
       mustBeCheckedPhrase,
@@ -43,26 +53,42 @@ export default class Input extends Component {
       case 'select':
         return <Select {...this.props} onChange={this.onChange.bind(this)}/>
       case 'checkbox':
-        return(
-          <div className="input-holder">
-            <input type="checkbox" id={name} name={name} checked={value} onChange={this.onCheckboxChange.bind(this)} />
-            <label htmlFor={name}>{checkboxLabel}{
-                required
-                  ? '*'
-                  : ''
-              }</label>
-              <ul className={needsToFill
-                  ? "input-errors vis"
-                  : "input-errors"}>
+        return (<div className="input-holder">
+          <input type="checkbox" id={name} name={name} checked={value} onChange={this.onCheckboxChange.bind(this)}/>
+          <label htmlFor={name}>{checkboxLabel}{
+              required
+                ? '*'
+                : ''
+            }</label>
+          <ul className={needsToFill
+              ? "input-errors vis"
+              : "input-errors"}>
             {needsToFill && <li>{mustBeCheckedPhrase || 'This field is required.'}</li>}
           </ul>
-          </div>
-        )
+        </div>)
+      case 'radio':
+        return (<div className="input-holder">
+          <label>{name}{
+              required
+                ? '*'
+                : ''
+            }</label>
+          {
+            options.map((option, index) => <div key={index}>
+              <input type="radio" id={`${name}-${option.value}`} name={name} value={option.value} checked={value} onChange={this.onRadioChange.bind(this)}/>
+              <label htmlFor={`${name}-${option.value}`}>
+                {option.label}
+              </label>
+            </div>)
+          }
+          <ul className={needsToFill
+              ? "input-errors vis"
+              : "input-errors"}>
+            {needsToFill && <li>{mustBeCheckedPhrase || 'This field is required.'}</li>}
+          </ul>
+        </div>)
       default:
         return (<div className="input-holder">
-          <input className={hasError || (needsToFill && value.length === 0)
-              ? 'input-err'
-              : ''} type={type} autoComplete="off" name={name} value={value} onChange={this.onChange.bind(this)}/>
           <span className={value.length > 0
               ? 'with-value'
               : ''}>{placeholder}{
@@ -70,6 +96,11 @@ export default class Input extends Component {
                 ? '*'
                 : ''
             }</span>
+          <input className={hasError || (needsToFill && value.length === 0)
+              ? 'input-err'
+              : ''} type={type} placeholder={hasPlaceholder
+              ? placeholder
+              : ''} autoComplete="off" name={name} value={value} onChange={this.onChange.bind(this)}/>
           <ul className={errors.length > 0 || needsToFill
               ? "input-errors vis"
               : "input-errors"}>

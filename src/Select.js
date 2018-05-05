@@ -58,30 +58,12 @@ export default class Select extends Component {
       requiredPhrase,
       required,
       selectHandle,
+      hasPlaceholder,
       multiSelect,
       needsToFill
     } = this.props
     const {hasError, value, errors, optionsVisible, options} = this.state
     return (<div className="input-holder">
-      <div onClick={this.toggleOptions} className={hasError || (needsToFill && value.length === 0)
-          ? 'input input-select input-err'
-          : 'input input-select '}>
-        {
-          multiSelect
-            ? value.map((v, index) => <div key={index} className="val-one">
-              {v.label || value}
-              <a onClick={() => this.removeValue(v)}>x</a>
-            </div>)
-            : value.label || value
-        }&nbsp;
-        <div className="ops-handle">
-          {
-            selectHandle
-              ? selectHandle
-              : <i className="ops-triangle"/>
-          }
-        </div>
-      </div>
       <span className={(
           multiSelect && value[0]) || (!multiSelect && value)
           ? 'with-value'
@@ -90,9 +72,39 @@ export default class Select extends Component {
             ? '*'
             : ''
         }</span>
+      <div onClick={this.toggleOptions} className={hasError || (needsToFill && value.length === 0)
+          ? 'input input-select input-err'
+          : 'input input-select '}>
+        {
+          multiSelect
+            ? value.length > 0
+              ? value.map((v, index) => <div key={index} className="val-one">
+                {v.label || value}
+                <a onClick={() => this.removeValue(v)}>x</a>
+              </div>)
+              : hasPlaceholder
+                ? placeholder
+                : ' '
+            : value.label
+              ? value.label
+              : value !== ''
+                ? value
+                : hasPlaceholder
+                  ? placeholder
+                  : ' '
+        }
+        <div className="ops-handle">
+          {
+            selectHandle
+              ? selectHandle
+              : <i className="ops-triangle"/>
+          }
+        </div>
+
+      </div>
       <div className={optionsVisible && options.length !== 0
-          ? "options vis"
-          : "options"}>
+          ? "reformact-select-options vis"
+          : "reformact-select-options"}>
         {
           options.map((op, index) => <div key={index} className="op" onClick={() => this.selectOption(op)}>
             {op.label}
