@@ -1,7 +1,9 @@
 {
-  "presets": ["env"],
-  "plugins": [
-    "transform-object-rest-spread",
-    "transform-react-jsx"
-  ]
+  "presets": [["es2015", {"modules": false}]],
+
+  "env": {
+    "test": {
+      "plugins": ["transform-es2015-modules-commonjs"]
+    }
+  }
 }
