@@ -145,6 +145,7 @@ var Input = function (_Component) {
         }
       });
     }, _this.onRadioChange = function (e) {
+      console.log(e.target);
       var value = _this.props.options.find(function (op) {
         return op.value === e.target.value;
       });
@@ -219,7 +220,7 @@ var Input = function (_Component) {
               return _react2.default.createElement(
                 'div',
                 { key: index },
-                _react2.default.createElement('input', (_React$createElement = { type: 'radio', id: name + '-' + option.value, name: name, checked: option === value, defaultValue: option.value }, _defineProperty(_React$createElement, 'checked', value), _defineProperty(_React$createElement, 'onChange', _this2.onRadioChange.bind(_this2)), _React$createElement)),
+                _react2.default.createElement('input', (_React$createElement = { type: 'radio', id: name + '-' + option.value, name: name, checked: option === value, defaultValue: option.value, value: name }, _defineProperty(_React$createElement, 'checked', value), _defineProperty(_React$createElement, 'onChange', _this2.onRadioChange.bind(_this2)), _React$createElement)),
                 _react2.default.createElement(
                   'label',
                   { htmlFor: name + '-' + option.value },
