@@ -34,7 +34,7 @@ export default class Input extends Component {
 
   onRadioChange = (e) => {
     var value = options.find(op => op.value === e.target.value)
-    this.setState({value})
+    this.setState({value: e.target.value})
     this.props.onChange({
       target: {
         name: this.props.name,
