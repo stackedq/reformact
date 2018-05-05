@@ -1,6 +1,6 @@
 {
   "name": "reformact",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React form component using state.",
   "main": "build/index.js",
   "scripts": {
