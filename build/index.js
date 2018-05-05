@@ -202,7 +202,7 @@ var Input = function (_Component) {
               name,
               required ? '*' : ''
             ),
-            options.map(function (option, index) {
+            options && options.map(function (option, index) {
               return _react2.default.createElement(
                 'div',
                 { key: index },
@@ -550,7 +550,7 @@ var Select = function (_Component) {
       hasError: false,
       errors: [],
       value: _this.props.defaultValue || (_this.props.multiSelect ? [] : ''),
-      options: _this.props.options,
+      options: _this.props.options || [],
       optionsVisible: false
     }, _this.toggleOptions = function () {
       _this.setState({

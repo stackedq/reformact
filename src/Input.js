@@ -75,7 +75,7 @@ export default class Input extends Component {
                 : ''
             }</label>
           {
-            options.map((option, index) => <div key={index}>
+            options && options.map((option, index) => <div key={index}>
               <input type="radio" id={`${name}-${option.value}`} name={name} value={option.value} checked={value} onChange={this.onRadioChange.bind(this)}/>
               <label htmlFor={`${name}-${option.value}`}>
                 {option.label}

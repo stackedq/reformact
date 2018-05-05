@@ -8,7 +8,7 @@ export default class Select extends Component {
       this.props.multiSelect
       ? []
       : ''),
-    options: this.props.options,
+    options: this.props.options || [],
     optionsVisible: false
   }
   toggleOptions = () => {
