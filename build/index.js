@@ -158,6 +158,7 @@ var Input = function (_Component) {
           checkboxLabel = _props.checkboxLabel,
           hasPlaceholder = _props.hasPlaceholder,
           placeholder = _props.placeholder,
+          options = _props.options,
           requiredPhrase = _props.requiredPhrase,
           mustBeCheckedPhrase = _props.mustBeCheckedPhrase,
           required = _props.required,

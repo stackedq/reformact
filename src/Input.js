@@ -43,6 +43,7 @@ export default class Input extends Component {
       checkboxLabel,
       hasPlaceholder,
       placeholder,
+      options,
       requiredPhrase,
       mustBeCheckedPhrase,
       required,
