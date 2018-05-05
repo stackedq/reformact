@@ -98,6 +98,8 @@ var _Select2 = _interopRequireDefault(_Select);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -143,7 +145,16 @@ var Input = function (_Component) {
         }
       });
     }, _this.onRadioChange = function (e) {
-      console.log(e.target);
+      var value = options.find(function (op) {
+        return op.value === e.target.value;
+      });
+      _this.setState({ value: value });
+      _this.props.onChange({
+        target: {
+          name: _this.props.name,
+          value: value
+        }
+      });
     }, _temp), _possibleConstructorReturn(_this, _ret);
   }
 
@@ -203,10 +214,12 @@ var Input = function (_Component) {
               required ? '*' : ''
             ),
             options && options.map(function (option, index) {
+              var _React$createElement;
+
               return _react2.default.createElement(
                 'div',
                 { key: index },
-                _react2.default.createElement('input', { type: 'radio', id: name + '-' + option.value, name: name, value: option.value, checked: value, onChange: _this2.onRadioChange.bind(_this2) }),
+                _react2.default.createElement('input', (_React$createElement = { type: 'radio', id: name + '-' + option.value, name: name, checked: option === value, value: option.value }, _defineProperty(_React$createElement, 'checked', value), _defineProperty(_React$createElement, 'onChange', _this2.onRadioChange.bind(_this2)), _React$createElement)),
                 _react2.default.createElement(
                   'label',
                   { htmlFor: name + '-' + option.value },
