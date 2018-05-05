@@ -145,7 +145,7 @@ var Input = function (_Component) {
         }
       });
     }, _this.onRadioChange = function (e) {
-      var value = options.find(function (op) {
+      var value = _this.props.options.find(function (op) {
         return op.value === e.target.value;
       });
       _this.setState({ value: value });
