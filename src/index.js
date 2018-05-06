@@ -23,7 +23,6 @@ export default class Form extends Component {
       e.preventDefault()
     var fields = this.state.fields
     var gotError = false
-    console.log(fields);
     for (var i = 0; i < fields.length; i++) {
       var field = fields[i]
       if (field.required && isEmpty(this.state[field.name])) {

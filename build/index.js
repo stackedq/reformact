@@ -98,8 +98,6 @@ var _Select2 = _interopRequireDefault(_Select);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -123,7 +121,9 @@ var Input = function (_Component) {
     return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Input.__proto__ || Object.getPrototypeOf(Input)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
       hasError: false,
       errors: [],
-      value: _this.props.defaultValue || ''
+      value: _this.props.type === 'radio' ? _this.props.options && _this.props.options.find(function (op) {
+        return op.selected;
+      }) : _this.props.defaultValue || ''
     }, _this.onChange = function (e) {
       var _this$props = _this.props,
           maxLength = _this$props.maxLength,
@@ -145,9 +145,8 @@ var Input = function (_Component) {
         }
       });
     }, _this.onRadioChange = function (e) {
-      console.log(e.target);
       var value = _this.props.options.find(function (op) {
-        return op.value === e.target.value;
+        return op.value.toString() === e.target.value;
       });
       _this.setState({ value: value });
       _this.props.onChange({
@@ -210,17 +209,15 @@ var Input = function (_Component) {
             { className: 'input-holder' },
             _react2.default.createElement(
               'label',
-              null,
+              { className: 'reformact-radio-group-title' },
               name,
               required ? '*' : ''
             ),
             options && options.map(function (option, index) {
-              var _React$createElement;
-
               return _react2.default.createElement(
                 'div',
                 { key: index },
-                _react2.default.createElement('input', (_React$createElement = { type: 'radio', id: name + '-' + option.value, name: name, checked: option === value, defaultValue: option.value, value: name }, _defineProperty(_React$createElement, 'checked', value), _defineProperty(_React$createElement, 'onChange', _this2.onRadioChange.bind(_this2)), _React$createElement)),
+                _react2.default.createElement('input', { type: 'radio', id: name + '-' + option.value, name: name, checked: value.label ? option === value : value === option.label, value: option.value, onChange: _this2.onRadioChange.bind(_this2) }),
                 _react2.default.createElement(
                   'label',
                   { htmlFor: name + '-' + option.value },
@@ -566,10 +563,8 @@ var Select = function (_Component) {
       value: _this.props.defaultValue || (_this.props.multiSelect ? [] : ''),
       options: _this.props.options || [],
       optionsVisible: false
-    }, _this.toggleOptions = function () {
-      _this.setState({
-        optionsVisible: !_this.state.optionsVisible
-      });
+    }, _this.openOptions = function () {
+      _this.setState({ optionsVisible: true });
     }, _this.closeOptions = function () {
       _this.setState({ optionsVisible: false });
     }, _this.selectOption = function (op) {
@@ -634,11 +629,11 @@ var Select = function (_Component) {
         ),
         _react2.default.createElement(
           'div',
-          { onClick: this.toggleOptions, className: hasError || needsToFill && value.length === 0 ? 'input input-select input-err' : 'input input-select ' },
+          { onClick: this.openOptions, className: hasError || needsToFill && value.length === 0 ? 'input input-select input-err' : 'input input-select ' },
           multiSelect ? value.length > 0 ? value.map(function (v, index) {
             return _react2.default.createElement(
               'div',
-              { key: index, className: 'val-one' },
+              { key: index, className: 'val-one', onBlur: _this2.closeOptions },
               v.label || value,
               _react2.default.createElement(
                 'a',
@@ -653,7 +648,8 @@ var Select = function (_Component) {
             'div',
             { className: 'ops-handle' },
             selectHandle ? selectHandle : _react2.default.createElement('i', { className: 'ops-triangle' })
-          )
+          ),
+          _react2.default.createElement('input', { type: 'select', onBlur: this.closeOptions })
         ),
         _react2.default.createElement(
           'div',
@@ -758,7 +754,6 @@ var Form = function (_Component) {
       if (e) e.preventDefault();
       var fields = _this.state.fields;
       var gotError = false;
-      console.log(fields);
       for (var i = 0; i < fields.length; i++) {
         var field = fields[i];
         if (field.required && (0, _utils.isEmpty)(_this.state[field.name])) {
@@ -829,7 +824,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "input, .input {\n  width: 100%;\n  border: 1px solid rgba(0, 0, 0, 0.3);\n  text-align: center;\n  border-radius: 4px;\n  padding: 4px;\n  color: #666;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\ninput[type=\"submit\"], .input[type=\"submit\"] {\n  background: #666;\n  color: #fff;\n}\n\ninput[type=\"submit\"]:hover, .input[type=\"submit\"]:hover {\n  background: #555;\n}\n\ninput[type=\"checkbox\"]{\n  width: auto;\n}\n\ninput[type=\"checkbox\"] + label{\n  font-weight: normal;\n  margin: 0 4px;\n}\n\n.input-select {\n  cursor: pointer;\n  position: relative;\n}\n\n.input-holder {\n  position: relative;\n  margin-bottom: 30px;\n}\n\n.input-holder span {\n  padding-bottom: 4px;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  opacity: .7;\n}\n\n.ops-triangle {\n  position: relative;\n  top: 9px;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 8px 8px 0 8px;\n  border-color: #666 transparent transparent transparent;\n}\n\n.ops-handle {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  margin: auto 0;\n  display: table;\n}\n\n.ops-handle i {\n   display: table-cell;\n   vertical-align: middle;\n}\n\n.val-one {\n  display: inline-block;\n  padding: 4px;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 20px;\n  font-size: 12px;\n}\n\n.val-one a{\n  margin: 0 4px;\n}\n\n.reformact-select-options {\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  visibility: hidden;\n  max-height: 200px;\n  overflow: auto;\n  opacity: 0;\n  padding: 8px 0;\n  position: absolute;\n  top: 90%;\n  left: 15px;\n  right: 15px;\n  background: #fff;\n  z-index: 10;\n  border-radius: 4px;\n  color: #666;\n  box-shadow: 0 0 8px rgba(0, 0, 0, .1), 0 4px 16px -2px rgba(0, 0, 0, .2)\n}\n\n.reformact-select-options > div {\n  padding: 8px;\n  display: block;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\n.reformact-select-options >div:hover {\n  background: #fafafa;\n}\n\n.reformact-select-options.vis {\n  visibility: visible;\n  top: 101%;\n  opacity: 1;\n}\n\n.input-err~span, .input-errors {\n  color: rgb(255, 128, 128)\n}\n\n.input-err {\n  border-color: rgb(255, 128, 128);\n  color: rgb(255, 128, 128);\n}\n\n.input-errors {\n  padding: 0 20px;\n}\n", ""]);
+exports.push([module.i, "input, .input {\n  width: 100%;\n  border: 1px solid rgba(0, 0, 0, 0.3);\n  text-align: center;\n  border-radius: 4px;\n  padding: 4px;\n  color: #666;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\ninput[type=\"submit\"], .input[type=\"submit\"] {\n  background: #666;\n  color: #fff;\n}\n\ninput[type=\"submit\"]:hover, .input[type=\"submit\"]:hover {\n  background: #555;\n}\n\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  width: auto;\n}\n\ninput[type=\"checkbox\"]+label, input[type=\"radio\"]+label {\n  font-weight: normal;\n  margin: 0 4px;\n}\n\n.reformact-radio-group-title {\n  font-weight: normal;\n}\n\n.input-select {\n  cursor: pointer;\n  position: relative;\n}\n\n.input-select input {\n  opacity: 0;\n  position: absolute;\n  cursor: pointer;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n}\n\n.input-holder {\n  position: relative;\n  margin-bottom: 30px;\n}\n\n.input-holder span {\n  padding-bottom: 4px;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  opacity: .7;\n}\n\n.ops-triangle {\n  position: relative;\n  top: 9px;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 8px 8px 0 8px;\n  border-color: #666 transparent transparent transparent;\n}\n\n.ops-handle {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  margin: auto 0;\n  display: table;\n}\n\n.ops-handle i {\n  display: table-cell;\n  vertical-align: middle;\n}\n\n.val-one {\n  display: inline-block;\n  padding: 4px;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 20px;\n  font-size: 12px;\n}\n\n.val-one a {\n  margin: 0 4px;\n  position: relative;\n  z-index: 2;\n}\n\n.reformact-select-options {\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  visibility: hidden;\n  max-height: 200px;\n  overflow: auto;\n  opacity: 0;\n  padding: 8px 0;\n  position: absolute;\n  top: 90%;\n  left: 15px;\n  right: 15px;\n  background: #fff;\n  z-index: 10;\n  border-radius: 4px;\n  color: #666;\n  box-shadow: 0 0 8px rgba(0, 0, 0, .1), 0 4px 16px -2px rgba(0, 0, 0, .2)\n}\n\n.reformact-select-options>div {\n  padding: 8px;\n  display: block;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\n.reformact-select-options>div:hover {\n  background: #fafafa;\n}\n\n.reformact-select-options.vis {\n  visibility: visible;\n  top: 101%;\n  opacity: 1;\n}\n\n.input-err~span, .input-errors {\n  color: rgb(255, 128, 128)\n}\n\n.input-err {\n  border-color: rgb(255, 128, 128);\n  color: rgb(255, 128, 128);\n}\n\n.input-errors {\n  padding: 0 20px;\n}\n", ""]);
 
 // exports
 

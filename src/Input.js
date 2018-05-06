@@ -5,8 +5,11 @@ export default class Input extends Component {
   state = {
     hasError: false,
     errors: [],
-    value: this.props.defaultValue || ''
+    value: this.props.type === 'radio'
+      ? this.props.options && this.props.options.find(op => op.selected)
+      : this.props.defaultValue || ''
   }
+
   onChange = (e) => {
     const {maxLength, maxLengthErrorPhrase} = this.props
     var errors = []
@@ -33,8 +36,7 @@ export default class Input extends Component {
   }
 
   onRadioChange = (e) => {
-    console.log(e.target);
-    var value = this.props.options.find(op => op.value === e.target.value)
+    var value = this.props.options.find(op => op.value.toString() === e.target.value)
     this.setState({value})
     this.props.onChange({
       target: {
@@ -77,14 +79,16 @@ export default class Input extends Component {
         </div>)
       case 'radio':
         return (<div className="input-holder">
-          <label>{name}{
+          <label className="reformact-radio-group-title">{name}{
               required
                 ? '*'
                 : ''
             }</label>
           {
             options && options.map((option, index) => <div key={index}>
-              <input type="radio" id={`${name}-${option.value}`} name={name} checked={option === value} defaultValue={option.value} value={name} checked={value} onChange={this.onRadioChange.bind(this)}/>
+              <input type="radio" id={`${name}-${option.value}`} name={name} checked={value.label
+                  ? option === value
+                  : value === option.label} value={option.value} onChange={this.onRadioChange.bind(this)}/>
               <label htmlFor={`${name}-${option.value}`}>
                 {option.label}
               </label>
