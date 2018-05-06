@@ -86,7 +86,7 @@ export default class Input extends Component {
             }</label>
           {
             options && options.map((option, index) => <div key={index}>
-              <input type="radio" id={`${name}-${option.value}`} name={name} checked={value.label
+              <input type="radio" id={`${name}-${option.value}`} name={name} checked={value && value.label
                   ? option === value
                   : value === option.label} value={option.value} onChange={this.onRadioChange.bind(this)}/>
               <label htmlFor={`${name}-${option.value}`}>
@@ -97,7 +97,7 @@ export default class Input extends Component {
           <ul className={needsToFill
               ? "input-errors vis"
               : "input-errors"}>
-            {needsToFill && <li>{mustBeCheckedPhrase || 'This field is required.'}</li>}
+            {needsToFill && <li>{mustBeCheckedPhrase || 'This field must be checked.'}</li>}
           </ul>
         </div>)
       default:
@@ -111,9 +111,9 @@ export default class Input extends Component {
             }</span>
           <input className={hasError || (needsToFill && value.length === 0)
               ? 'input-err'
-              : ''} type={type} placeholder={hasPlaceholder
-              ? placeholder
-              : ''} autoComplete="off" name={name} value={value} onChange={this.onChange.bind(this)}/>
+              : ''} type={type} placeholder={hasPlaceholder === false
+              ? ''
+              : placeholder} autoComplete="off" name={name} value={value} onChange={this.onChange.bind(this)}/>
           <ul className={errors.length > 0 || needsToFill
               ? "input-errors vis"
               : "input-errors"}>

@@ -217,7 +217,7 @@ var Input = function (_Component) {
               return _react2.default.createElement(
                 'div',
                 { key: index },
-                _react2.default.createElement('input', { type: 'radio', id: name + '-' + option.value, name: name, checked: value.label ? option === value : value === option.label, value: option.value, onChange: _this2.onRadioChange.bind(_this2) }),
+                _react2.default.createElement('input', { type: 'radio', id: name + '-' + option.value, name: name, checked: value && value.label ? option === value : value === option.label, value: option.value, onChange: _this2.onRadioChange.bind(_this2) }),
                 _react2.default.createElement(
                   'label',
                   { htmlFor: name + '-' + option.value },
@@ -231,7 +231,7 @@ var Input = function (_Component) {
               needsToFill && _react2.default.createElement(
                 'li',
                 null,
-                mustBeCheckedPhrase || 'This field is required.'
+                mustBeCheckedPhrase || 'This field must be checked.'
               )
             )
           );
@@ -245,7 +245,7 @@ var Input = function (_Component) {
               placeholder,
               required ? '*' : ''
             ),
-            _react2.default.createElement('input', { className: hasError || needsToFill && value.length === 0 ? 'input-err' : '', type: type, placeholder: hasPlaceholder ? placeholder : '', autoComplete: 'off', name: name, value: value, onChange: this.onChange.bind(this) }),
+            _react2.default.createElement('input', { className: hasError || needsToFill && value.length === 0 ? 'input-err' : '', type: type, placeholder: hasPlaceholder === false ? '' : placeholder, autoComplete: 'off', name: name, value: value, onChange: this.onChange.bind(this) }),
             _react2.default.createElement(
               'ul',
               { className: errors.length > 0 || needsToFill ? "input-errors vis" : "input-errors" },
@@ -643,7 +643,7 @@ var Select = function (_Component) {
                 'x'
               )
             );
-          }) : hasPlaceholder ? placeholder : ' ' : value.label ? value.label : value !== '' ? value : hasPlaceholder ? placeholder : ' ',
+          }) : hasPlaceholder !== false ? placeholder : ' ' : value.label ? value.label : value !== '' ? value : hasPlaceholder !== false ? placeholder : ' ',
           _react2.default.createElement(
             'div',
             { className: 'ops-handle' },
