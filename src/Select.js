@@ -11,10 +11,8 @@ export default class Select extends Component {
     options: this.props.options || [],
     optionsVisible: false
   }
-  toggleOptions = () => {
-    this.setState({
-      optionsVisible: !this.state.optionsVisible
-    })
+  openOptions = () => {
+    this.setState({optionsVisible: true})
   }
   closeOptions = () => {
     this.setState({optionsVisible: false})
@@ -72,13 +70,13 @@ export default class Select extends Component {
             ? '*'
             : ''
         }</span>
-      <div onClick={this.toggleOptions} className={hasError || (needsToFill && value.length === 0)
+      <div onClick={this.openOptions} className={hasError || (needsToFill && value.length === 0)
           ? 'input input-select input-err'
           : 'input input-select '}>
         {
           multiSelect
             ? value.length > 0
-              ? value.map((v, index) => <div key={index} className="val-one">
+              ? value.map((v, index) => <div key={index} className="val-one" onBlur={this.closeOptions}>
                 {v.label || value}
                 <a onClick={() => this.removeValue(v)}>x</a>
               </div>)
@@ -100,7 +98,7 @@ export default class Select extends Component {
               : <i className="ops-triangle"/>
           }
         </div>
-
+        <input type="select" onBlur={this.closeOptions}/>
       </div>
       <div className={optionsVisible && options.length !== 0
           ? "reformact-select-options vis"
