@@ -80,14 +80,14 @@ export default class Select extends Component {
                 {v.label || value}
                 <a onClick={() => this.removeValue(v)}>x</a>
               </div>)
-              : hasPlaceholder
+              : hasPlaceholder !== false
                 ? placeholder
                 : ' '
             : value.label
               ? value.label
               : value !== ''
                 ? value
-                : hasPlaceholder
+                : hasPlaceholder!== false
                   ? placeholder
                   : ' '
         }
