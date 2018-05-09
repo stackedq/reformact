@@ -1,7 +1,6 @@
-input, .input {
+input, .input, textarea {
   width: 100%;
   border: 1px solid rgba(0, 0, 0, 0.3);
-  text-align: center;
   border-radius: 4px;
   padding: 4px;
   color: #666;
@@ -29,6 +28,10 @@ input[type="checkbox"]+label, input[type="radio"]+label {
   margin: 0 4px;
 }
 
+textarea{
+  resize: none;
+}
+
 .reformact-radio-group-title {
   font-weight: normal;
 }
@@ -36,6 +39,7 @@ input[type="checkbox"]+label, input[type="radio"]+label {
 .input-select {
   cursor: pointer;
   position: relative;
+  padding: 4px 16px;
 }
 
 .input-select input {

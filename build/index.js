@@ -235,6 +235,18 @@ var Input = function (_Component) {
               )
             )
           );
+        case 'textarea':
+          return _react2.default.createElement(
+            'div',
+            { className: 'input-holder' },
+            _react2.default.createElement(
+              'span',
+              { className: value.length > 0 ? 'with-value' : '' },
+              placeholder,
+              required ? '*' : ''
+            ),
+            _react2.default.createElement('textarea', { className: hasError || needsToFill && value.length === 0 ? 'input-err' : '', onChange: this.onChange.bind(this), name: name, placeholder: hasPlaceholder === false ? '' : placeholder, value: value })
+          );
         default:
           return _react2.default.createElement(
             'div',
@@ -643,7 +655,11 @@ var Select = function (_Component) {
                 'x'
               )
             );
-          }) : hasPlaceholder !== false ? placeholder : ' ' : value.label ? value.label : value !== '' ? value : hasPlaceholder !== false ? placeholder : ' ',
+          }) : hasPlaceholder !== false ? placeholder : ' asd' : value.label ? value.label : value !== '' ? value : hasPlaceholder !== false ? placeholder : _react2.default.createElement(
+            'i',
+            null,
+            '\xA0'
+          ),
           _react2.default.createElement(
             'div',
             { className: 'ops-handle' },
@@ -824,7 +840,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "input, .input {\n  width: 100%;\n  border: 1px solid rgba(0, 0, 0, 0.3);\n  text-align: center;\n  border-radius: 4px;\n  padding: 4px;\n  color: #666;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\ninput[type=\"submit\"], .input[type=\"submit\"] {\n  background: #666;\n  color: #fff;\n}\n\ninput[type=\"submit\"]:hover, .input[type=\"submit\"]:hover {\n  background: #555;\n}\n\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  width: auto;\n}\n\ninput[type=\"checkbox\"]+label, input[type=\"radio\"]+label {\n  font-weight: normal;\n  margin: 0 4px;\n}\n\n.reformact-radio-group-title {\n  font-weight: normal;\n}\n\n.input-select {\n  cursor: pointer;\n  position: relative;\n}\n\n.input-select input {\n  opacity: 0;\n  position: absolute;\n  cursor: pointer;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n}\n\n.input-holder {\n  position: relative;\n  margin-bottom: 30px;\n}\n\n.input-holder span {\n  padding-bottom: 4px;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  opacity: .7;\n}\n\n.ops-triangle {\n  position: relative;\n  top: 9px;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 8px 8px 0 8px;\n  border-color: #666 transparent transparent transparent;\n}\n\n.ops-handle {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  margin: auto 0;\n  display: table;\n}\n\n.ops-handle i {\n  display: table-cell;\n  vertical-align: middle;\n}\n\n.val-one {\n  display: inline-block;\n  padding: 4px;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 20px;\n  font-size: 12px;\n}\n\n.val-one a {\n  margin: 0 4px;\n  position: relative;\n  z-index: 2;\n}\n\n.reformact-select-options {\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  visibility: hidden;\n  max-height: 200px;\n  overflow: auto;\n  opacity: 0;\n  padding: 8px 0;\n  position: absolute;\n  top: 90%;\n  left: 15px;\n  right: 15px;\n  background: #fff;\n  z-index: 10;\n  border-radius: 4px;\n  color: #666;\n  box-shadow: 0 0 8px rgba(0, 0, 0, .1), 0 4px 16px -2px rgba(0, 0, 0, .2)\n}\n\n.reformact-select-options>div {\n  padding: 8px;\n  display: block;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\n.reformact-select-options>div:hover {\n  background: #fafafa;\n}\n\n.reformact-select-options.vis {\n  visibility: visible;\n  top: 101%;\n  opacity: 1;\n}\n\n.input-err~span, .input-errors {\n  color: rgb(255, 128, 128)\n}\n\n.input-err {\n  border-color: rgb(255, 128, 128);\n  color: rgb(255, 128, 128);\n}\n\n.input-errors {\n  padding: 0 20px;\n}\n", ""]);
+exports.push([module.i, "input, .input, textarea {\n  width: 100%;\n  border: 1px solid rgba(0, 0, 0, 0.3);\n  border-radius: 4px;\n  padding: 4px;\n  color: #666;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\ninput[type=\"submit\"], .input[type=\"submit\"] {\n  background: #666;\n  color: #fff;\n}\n\ninput[type=\"submit\"]:hover, .input[type=\"submit\"]:hover {\n  background: #555;\n}\n\ninput[type=\"checkbox\"], input[type=\"radio\"] {\n  width: auto;\n}\n\ninput[type=\"checkbox\"]+label, input[type=\"radio\"]+label {\n  font-weight: normal;\n  margin: 0 4px;\n}\n\ntextarea{\n  resize: none;\n}\n\n.reformact-radio-group-title {\n  font-weight: normal;\n}\n\n.input-select {\n  cursor: pointer;\n  position: relative;\n  padding: 4px 16px;\n}\n\n.input-select input {\n  opacity: 0;\n  position: absolute;\n  cursor: pointer;\n  left: 0;\n  right: 0;\n  top: 0;\n  bottom: 0;\n}\n\n.input-holder {\n  position: relative;\n  margin-bottom: 30px;\n}\n\n.input-holder span {\n  padding-bottom: 4px;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  opacity: .7;\n}\n\n.ops-triangle {\n  position: relative;\n  top: 9px;\n  width: 0;\n  height: 0;\n  border-style: solid;\n  border-width: 8px 8px 0 8px;\n  border-color: #666 transparent transparent transparent;\n}\n\n.ops-handle {\n  position: absolute;\n  top: 0;\n  bottom: 0;\n  margin: auto 0;\n  display: table;\n}\n\n.ops-handle i {\n  display: table-cell;\n  vertical-align: middle;\n}\n\n.val-one {\n  display: inline-block;\n  padding: 4px;\n  border: 1px solid rgba(0, 0, 0, 0.05);\n  border-radius: 20px;\n  font-size: 12px;\n}\n\n.val-one a {\n  margin: 0 4px;\n  position: relative;\n  z-index: 2;\n}\n\n.reformact-select-options {\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n  visibility: hidden;\n  max-height: 200px;\n  overflow: auto;\n  opacity: 0;\n  padding: 8px 0;\n  position: absolute;\n  top: 90%;\n  left: 15px;\n  right: 15px;\n  background: #fff;\n  z-index: 10;\n  border-radius: 4px;\n  color: #666;\n  box-shadow: 0 0 8px rgba(0, 0, 0, .1), 0 4px 16px -2px rgba(0, 0, 0, .2)\n}\n\n.reformact-select-options>div {\n  padding: 8px;\n  display: block;\n  cursor: pointer;\n  transition: all 0.3s ease;\n  -o-transition: all 0.3s ease;\n  -moz-transition: all 0.3s ease;\n  -webkit-transition: all 0.3s ease;\n}\n\n.reformact-select-options>div:hover {\n  background: #fafafa;\n}\n\n.reformact-select-options.vis {\n  visibility: visible;\n  top: 101%;\n  opacity: 1;\n}\n\n.input-err~span, .input-errors {\n  color: rgb(255, 128, 128)\n}\n\n.input-err {\n  border-color: rgb(255, 128, 128);\n  color: rgb(255, 128, 128);\n}\n\n.input-errors {\n  padding: 0 20px;\n}\n", ""]);
 
 // exports
 

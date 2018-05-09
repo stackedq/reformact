@@ -48,7 +48,7 @@ this `Form` has an `onSubmit` attribute that gets fired when the form is submitt
 the `submitText` is the title of submit button.
 
 ## Supported field types
-Currently reformact supports `text`, `number`, `password`, `select`, `checkbox` and `radio` inputs, but will support lots of inputs soon.
+Currently reformact supports `text`, `number`, `password`, `textarea`, `select`, `checkbox` and `radio` inputs, but will support lots of inputs soon.
 
 ## Field attributes
 

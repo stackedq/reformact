@@ -9,7 +9,7 @@ export default class Input extends Component {
       ? this.props.options && this.props.options.find(op => op.selected)
       : this.props.defaultValue || ''
   }
-
+  
   onChange = (e) => {
     const {maxLength, maxLengthErrorPhrase} = this.props
     var errors = []
@@ -99,6 +99,23 @@ export default class Input extends Component {
               : "input-errors"}>
             {needsToFill && <li>{mustBeCheckedPhrase || 'This field must be checked.'}</li>}
           </ul>
+        </div>)
+      case 'textarea':
+        return (<div className="input-holder">
+          <span className={value.length > 0
+              ? 'with-value'
+              : ''}>{placeholder}{
+              required
+                ? '*'
+                : ''
+            }</span>
+          <textarea className={hasError || (needsToFill && value.length === 0)
+              ? 'input-err'
+              : ''} onChange={this.onChange.bind(this)} name={name} placeholder={
+              hasPlaceholder === false
+                ? ''
+                : placeholder
+            } value={value}></textarea>
         </div>)
       default:
         return (<div className="input-holder">

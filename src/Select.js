@@ -82,14 +82,14 @@ export default class Select extends Component {
               </div>)
               : hasPlaceholder !== false
                 ? placeholder
-                : ' '
+                : ' asd'
             : value.label
               ? value.label
               : value !== ''
                 ? value
                 : hasPlaceholder!== false
                   ? placeholder
-                  : ' '
+                  : <i>&nbsp;</i>
         }
         <div className="ops-handle">
           {
