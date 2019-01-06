@@ -36,10 +36,10 @@ it('Link changes the class when hovered', () => {
         required: true,
         options: [
           {
-            label: 'nigga',
+            label: 'male',
             value: 1
           }, {
-            label: 'bitch',
+            label: 'female',
             value: 3
           }
         ],
@@ -53,10 +53,10 @@ it('Link changes the class when hovered', () => {
         selectHandle: <i className="ion-ios-arrow-down"/>,
         options: [
           {
-            label: 'nigga',
+            label: 'male',
             value: 1
           }, {
-            label: 'bitch',
+            label: 'female',
             value: 3
           }
         ]
